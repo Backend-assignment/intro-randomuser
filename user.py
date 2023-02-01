@@ -16,7 +16,17 @@ def get_user(user_data: dict) -> dict:
             'country': user country
         }
     '''
-    pass
+    firstname = user_data['results'][0]['name']['first']
+    lastname = user_data['results'][0]['name']['last']
+    age = user_data['results'][0]['dob']['age']
+    country = user_data['results'][0]['nat']
+    
+    return {
+        'firstname': firstname,
+        'lastname': lastname,
+        'age': age,
+        'country': country
+    }
 
 
 def get_users(url: str, n: int) -> list:
@@ -29,7 +39,14 @@ def get_users(url: str, n: int) -> list:
     Returns:
         list: list of users. user from get_user()
     '''
-    pass
+    response = requests.get(url + f'?results={n}')
+    users_data = json.loads(response.text)
+    
+    users = []
+    for user_data in users_data['results']:
+        users.append(get_user(user_data))
+        
+    return users
     
 
 def write_users_to_file(file_path: str, n: int):
@@ -39,5 +56,13 @@ def write_users_to_file(file_path: str, n: int):
         url (str): api url
         n (int): number of users
     '''
-    pass
+    url = 'https://randomuser.me/api/'
+    users = get_users(url, n)
+    
+    with open(file_path, 'w') as file:
+        for user in users:
+            file.write(f"{user['firstname']} {user['lastname']}, {user['age']}, {user['country']}\n")
+
+
+
 
