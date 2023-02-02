@@ -68,7 +68,7 @@ class RandomUser:
             str: user first name
         '''
         passuser = self.get_randomuser()
-        return user['results'][0]['name']['first']
+        return passuser['results'][0]['name']['first']
     
     def get_last_name(self) -> str:
         '''get user last name from randomuser
