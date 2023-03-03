@@ -14,7 +14,8 @@ class RandomUser:
         response = requests.get(self.url)
         if response.status_code == 200:
             return response.json()
-        return False
+        else:
+            return Exception('Request to randomuser API failed with status code {}'.format(response.status_code))
     
     def get_cell(self) -> str:
         '''get user cell from randomuser
@@ -22,16 +23,16 @@ class RandomUser:
         Returns:
             str: user cell
         '''
-        data = self.get_randomuser()
-        return data['results'][0]['cell']
-    
+        user = self.get_randomuser()
+        return user['results'][0]['cell']
     def get_city(self) -> str:
         '''get user city from randomuser
         
         Returns:
             str: user city
         '''
-        pass
+        user = self.get_randomuser()
+        return user['results'][0]['location']['city']
     
     def get_dob(self) -> dict:
         '''get user dob from randomuser
@@ -39,7 +40,9 @@ class RandomUser:
         Returns:
             dict: user dob
         '''
-        pass
+        user = self.get_randomuser()
+        return user['results'][0]['dob']
+        
     
     def get_email(self) -> str:
         '''get user email from randomuser
@@ -47,23 +50,17 @@ class RandomUser:
         Returns:
             str: user email
         '''
-        pass
-    
-    def get_email(self) -> str:
-        '''get user email from randomuser
-        
-        Returns:
-            str: user email
-        '''
-        pass
-    
+        user = self.get_randomuser()
+        return user['results'][0]['email']
+  
     def get_first_name(self) -> str:
         '''get user first name from randomuser
         
         Returns:
             str: user first name
         '''
-        pass
+        user = self.get_randomuser()
+        return user['results'][0]['name']['first']
     
     def get_last_name(self) -> str:
         '''get user last name from randomuser
@@ -71,7 +68,8 @@ class RandomUser:
         Returns:
             str: user last name
         '''
-        pass
+        user = self.get_randomuser()
+        return user['results'][0]['name']['last']
     
     def get_full_name(self) -> str:
         '''get user full name from randomuser
@@ -79,7 +77,9 @@ class RandomUser:
         Returns:
             str: user full name
         '''
-        pass
+        user = self.get_randomuser()
+        return user['results'][0]['name']['title'] + ' ' + user['results'][0]['name']['first'] + ' ' + user['results'][0]['name']['last']
+
     
     def get_gender(self) -> str:
         '''get user gender from randomuser
@@ -87,7 +87,8 @@ class RandomUser:
         Returns:
             str: user gender
         '''
-        pass
+        user = self.get_randomuser()
+        return user['results'][0]['gender']
     
     def get_id(self) -> dict:
         '''get user id from randomuser
@@ -95,7 +96,8 @@ class RandomUser:
         Returns:
             dict: user id
         '''
-        pass
+        user = self.get_randomuser()
+        return user['id']
     
     def get_id_number(self) -> str:
         '''get user id number from randomuser
@@ -103,7 +105,8 @@ class RandomUser:
         Returns:
             str: user id number
         '''
-        pass
+        data = self.get_id()
+        return data['value']
     
     def get_info(self) -> dict:
         '''get user info from randomuser
@@ -111,7 +114,8 @@ class RandomUser:
         Returns:
             dict: user info
         '''
-        pass
+        data = self.get_randomuser()
+        return data['info']
     
     def get_nat(self) -> str:
         '''get user nat from randomuser
@@ -119,7 +123,8 @@ class RandomUser:
         Returns:
             str: user nat
         '''
-        pass
+        data = self.get_randomuser()
+        return data['nat']
     
     def get_picture(self) -> dict:
         '''get user picture from randomuser
@@ -127,9 +132,10 @@ class RandomUser:
         Returns:
             dict: user picture
         '''
-        pass
+        data = self.get_randomuser()
+        return data['picture']
 
 
 randomuser = RandomUser()
 print(randomuser.get_randomuser())
-print(randomuser.get_cell())
+print(randomuser.get_picture())
